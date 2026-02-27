@@ -149,21 +149,35 @@ ctx.textAlign = "center";
 
 let y = 760;
 
-/* MAIRIE DES JEUNES (même ligne) */
-ctx.font = "900 52px Poppins";
+/* ================= MAIRIE DES JEUNES DE DJOUGOU (UNE LIGNE) ================= */
 
-/* MAIRIE */
+ctx.font = "900 50px Poppins";
+
+const text1 = "MAIRIE ";
+const text2 = "DES JEUNES ";
+const text3 = "DE DJOUGOU";
+
+const width1 = ctx.measureText(text1).width;
+const width2 = ctx.measureText(text2).width;
+const width3 = ctx.measureText(text3).width;
+
+const totalWidth = width1 + width2 + width3;
+
+/* point de départ centré */
+let startX = (1080 - totalWidth) / 2;
+let y = 760;
+
+/* MAIRIE (vert) */
 ctx.fillStyle = "#1f8c3a";
-ctx.fillText("MAIRIE", 380, y);
+ctx.fillText(text1, startX, y);
 
-/* DES JEUNES */
+/* DES JEUNES (jaune) */
 ctx.fillStyle = "#f2c300";
-ctx.fillText("DES JEUNES", 650, y);
+ctx.fillText(text2, startX + width1, y);
 
-/* DE DJOUGOU */
-y += 65;
+/* DE DJOUGOU (rouge) */
 ctx.fillStyle = "#d91e18";
-ctx.fillText("DE DJOUGOU", 540, y);
+ctx.fillText(text3, startX + width1 + width2, y);
 
 /* pour la */
 y += 70;
