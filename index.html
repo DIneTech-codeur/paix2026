@@ -62,132 +62,130 @@ const ctx = canvas.getContext("2d");
 
 ctx.clearRect(0,0,1080,1080);
 
-/* ================= FOND PREMIUM ================= */
+/* ================= FOND ================= */
 
 let bgGradient = ctx.createLinearGradient(0,0,1080,1080);
-bgGradient.addColorStop(0,"#1c8c3a");
+bgGradient.addColorStop(0,"#1f8c3a");
 bgGradient.addColorStop(0.5,"#f2c300");
 bgGradient.addColorStop(1,"#d91e18");
 ctx.fillStyle = bgGradient;
 ctx.fillRect(0,0,1080,1080);
 
-/* Lumière radiale derrière photo */
-let glow = ctx.createRadialGradient(350,450,100,350,450,600);
-glow.addColorStop(0,"rgba(255,255,255,0.35)");
-glow.addColorStop(1,"rgba(255,255,255,0)");
-ctx.fillStyle = glow;
-ctx.fillRect(0,0,1080,1080);
-
 /* ================= VAGUE BASSE ================= */
 
-ctx.fillStyle = "#f5efe6";
+ctx.fillStyle = "#f4efe6";
 ctx.beginPath();
 ctx.moveTo(0,760);
-ctx.quadraticCurveTo(540,680,1080,760);
+ctx.quadraticCurveTo(540,700,1080,760);
 ctx.lineTo(1080,1080);
 ctx.lineTo(0,1080);
 ctx.closePath();
 ctx.fill();
 
-/* ================= HALO TRICOLORE ================= */
+/* ================= PHOTO ================= */
 
 const centerX = 350;
-const centerY = 450;
-const outerRadius = 330;
-const innerRadius = 300;
+const centerY = 420;
+
+/* Halo fin tricolore */
+ctx.lineWidth = 18;
 
 /* Vert */
 ctx.beginPath();
-ctx.strokeStyle = "#1c8c3a";
-ctx.lineWidth = 40;
-ctx.arc(centerX,centerY,315,-Math.PI/2,Math.PI/6);
+ctx.strokeStyle = "#1f8c3a";
+ctx.arc(centerX,centerY,310,-Math.PI/2,Math.PI/6);
 ctx.stroke();
 
 /* Jaune */
 ctx.beginPath();
 ctx.strokeStyle = "#f2c300";
-ctx.arc(centerX,centerY,315,Math.PI/6,5*Math.PI/6);
+ctx.arc(centerX,centerY,310,Math.PI/6,5*Math.PI/6);
 ctx.stroke();
 
 /* Rouge */
 ctx.beginPath();
 ctx.strokeStyle = "#d91e18";
-ctx.arc(centerX,centerY,315,5*Math.PI/6,3*Math.PI/2);
+ctx.arc(centerX,centerY,310,5*Math.PI/6,3*Math.PI/2);
 ctx.stroke();
 
 /* Cercle blanc */
 ctx.beginPath();
 ctx.fillStyle = "white";
-ctx.arc(centerX,centerY,innerRadius,0,Math.PI*2);
+ctx.arc(centerX,centerY,290,0,Math.PI*2);
 ctx.fill();
 
-/* ================= PHOTO ================= */
-
+/* Photo clip */
 ctx.save();
 ctx.beginPath();
-ctx.arc(centerX,centerY,280,0,Math.PI*2);
+ctx.arc(centerX,centerY,270,0,Math.PI*2);
 ctx.clip();
 
 let size = Math.min(uploadedImage.width, uploadedImage.height);
 let sx = (uploadedImage.width - size) / 2;
 let sy = (uploadedImage.height - size) / 2;
 
-ctx.drawImage(uploadedImage,sx,sy,size,size,70,170,560,560);
+ctx.drawImage(uploadedImage,sx,sy,size,size,80,150,540,540);
 ctx.restore();
 
 /* ================= TEXTE DROITE ================= */
 
 ctx.textAlign = "left";
-let textStartX = 650;
-let y = 380;
 
-/* Ligne intro */
+let textX = 670;
+let textY = 400;
+
 ctx.fillStyle = "#222";
-ctx.font = "500 40px Poppins";
-ctx.fillText("Je m’engage avec la", textStartX, y);
+ctx.font = "700 48px Poppins";
+ctx.fillText("Je m’engage", textX, textY);
 
-y += 70;
+textY += 60;
+
+ctx.font = "500 40px Poppins";
+ctx.fillText("avec la", textX, textY);
+
+/* ================= BLOC BAS STRUCTURÉ ================= */
+
+ctx.textAlign = "center";
+
+let y = 820;
 
 /* MAIRIE */
-ctx.font = "900 60px Poppins";
-ctx.fillStyle = "#1c8c3a";
-ctx.fillText("MAIRIE", textStartX, y);
+ctx.font = "900 58px Poppins";
+ctx.fillStyle = "#1f8c3a";
+ctx.fillText("MAIRIE", 540, y);
 
 y += 65;
 
 ctx.fillStyle = "#f2c300";
-ctx.fillText("DES JEUNES", textStartX, y);
+ctx.fillText("DES JEUNES", 540, y);
 
 y += 65;
 
 ctx.fillStyle = "#d91e18";
-ctx.fillText("DE DJOUGOU", textStartX, y);
+ctx.fillText("DE DJOUGOU", 540, y);
 
-/* ================= BAS ================= */
-
-ctx.textAlign = "center";
-y = 820;
-
-ctx.fillStyle = "#222";
-ctx.font = "400 42px Poppins";
+/* pour la */
+y += 80;
+ctx.fillStyle = "#333";
+ctx.font = "400 40px Poppins";
 ctx.fillText("pour la", 540, y);
 
-y += 65;
-
-ctx.fillStyle = "#1c8c3a";
-ctx.font = "900 70px Poppins";
+/* PAIX */
+y += 70;
+ctx.fillStyle = "#1f8c3a";
+ctx.font = "900 72px Poppins";
 ctx.fillText("PAIX", 540, y);
 
+/* phrase */
 y += 70;
-
-ctx.fillStyle = "#333";
-ctx.font = "400 36px Poppins";
+ctx.fillStyle = "#444";
+ctx.font = "400 34px Poppins";
 ctx.fillText("avant, pendant et après les élections au Bénin.", 540, y);
 
-y += 90;
-
-ctx.fillStyle = "#1c8c3a";
-ctx.font = "700 44px Poppins";
+/* hashtag */
+y += 80;
+ctx.fillStyle = "#1f8c3a";
+ctx.font = "700 42px Poppins";
 ctx.fillText("#PaixAuBénin2026", 540, y);
 
 /* ================= LOGO ================= */
@@ -198,10 +196,10 @@ logo.onload = function(){
 
 ctx.beginPath();
 ctx.fillStyle = "white";
-ctx.arc(930,150,100,0,Math.PI*2);
+ctx.arc(930,150,95,0,Math.PI*2);
 ctx.fill();
 
-ctx.drawImage(logo,850,70,160,160);
+ctx.drawImage(logo,855,75,150,150);
 
 /* DOWNLOAD */
 const link = document.createElement("a");
