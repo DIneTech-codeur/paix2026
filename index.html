@@ -152,20 +152,23 @@ ctx.fillStyle = "#1f8c3a";
 ctx.font = "600 26px Poppins";
 ctx.fillText("Ambassadeur Paix 2026", 105, 135);
 
-/* ================= TEXTE DROITE ================= */
+/* ================= TEXTE DROITE OPTIMISÉ ================= */
 
 ctx.textAlign = "left";
 
-let textX = 670;
-let textY = 400;
+/* Plus de respiration */
+let textX = 720;
+
+/* Centré verticalement par rapport au cercle */
+let textY = 390;
 
 ctx.fillStyle = "#222";
-ctx.font = "700 48px Poppins";
+ctx.font = "700 52px Poppins";
 ctx.fillText("Je m’engage", textX, textY);
 
-textY += 60;
+textY += 65;
 
-ctx.font = "500 40px Poppins";
+ctx.font = "500 42px Poppins";
 ctx.fillText("avec la", textX, textY);
 
 /* ================= BLOC BLANC OPTIMISÉ ================= */
