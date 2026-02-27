@@ -220,44 +220,50 @@ ctx.font = "700 34px Poppins";
 ctx.fillStyle = "#1f8c3a";
 ctx.fillText("#PaixAuBénin2026", 540, y);
   
-/* ================= LOGO PRO PRESTIGE ================= */
+/* ===== LOGO ===== */
 
-const logo = await loadImage("/logo.png"); // adapte le chemin si besoin
+const logo = new Image();
+logo.src = "logo.png"; // doit être dans le même dossier que ton HTML
 
-const maxWidth = 160;
-const maxHeight = 160;
+logo.onload = function(){
 
-/* Calcul ratio */
-const ratio = Math.min(
-  maxWidth / logo.width,
-  maxHeight / logo.height
-);
+  const maxSize = 150;
 
-const logoWidth = logo.width * ratio;
-const logoHeight = logo.height * ratio;
+  const ratio = Math.min(
+    maxSize / logo.width,
+    maxSize / logo.height
+  );
 
-/* Position (coin haut droit, comme ton design actuel) */
-const logoX = 1080 - logoWidth - 60;
-const logoY = 60;
+  const logoWidth = logo.width * ratio;
+  const logoHeight = logo.height * ratio;
 
-/* Ombre légère premium */
-ctx.shadowColor = "rgba(0,0,0,0.15)";
-ctx.shadowBlur = 20;
-ctx.shadowOffsetY = 6;
+  const logoX = 1080 - logoWidth - 60;
+  const logoY = 60;
 
-/* Draw sans déformation */
-ctx.drawImage(logo, logoX, logoY, logoWidth, logoHeight);
+  /* Cercle blanc propre derrière */
+  ctx.beginPath();
+  ctx.arc(logoX + logoWidth/2, logoY + logoHeight/2, 90, 0, Math.PI*2);
+  ctx.fillStyle = "white";
+  ctx.fill();
 
-/* Reset shadow */
-ctx.shadowColor = "transparent";
-ctx.shadowBlur = 0;
-ctx.shadowOffsetY = 0;
+  /* Logo sans déformation */
+  ctx.drawImage(logo, logoX, logoY, logoWidth, logoHeight);
 
-/* DOWNLOAD */
-const link = document.createElement("a");
-link.download = "paix2026.png";
-link.href = canvas.toDataURL("image/png");
-link.click();
+  downloadCanvas();
+};
+
+/* Fallback si le logo ne charge pas */
+logo.onerror = function(){
+  console.log("Logo non chargé");
+  downloadCanvas();
+};
+
+/* Fonction téléchargement */
+function downloadCanvas(){
+  const link = document.createElement("a");
+  link.download = "paix2026.png";
+  link.href = canvas.toDataURL("image/png");
+  link.click();
 }
 
 }
