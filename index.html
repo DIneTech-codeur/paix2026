@@ -90,8 +90,8 @@ padding:10px;
 .text{
 position:absolute;
 top:300px;
-right:90px;
-width:480px;
+right:60px;
+width:520px;
 color:#111;
 }
 
@@ -122,9 +122,11 @@ font-weight:900;
 /* colombe */
 .dove{
 position:absolute;
-top:650px;
-right:470px;
-font-size:70px;
+top:720px;
+right:560px;
+font-size:60px;
+z-index:1;
+opacity:0.9;
 }
 
 /* hashtag */
@@ -154,6 +156,11 @@ border-radius:5px;
 font-size:16px;
 cursor:pointer;
 }
+
+ .logo{
+object-fit:contain;
+aspect-ratio:1/1;
+} 
 </style>
 </head>
 
@@ -204,10 +211,13 @@ reader.readAsDataURL(e.target.files[0]);
 });
 
 function downloadImage(){
-html2canvas(document.querySelector("#design")).then(canvas=>{
+html2canvas(document.querySelector("#design"),{
+scale:2,
+useCORS:true
+}).then(canvas=>{
 const link=document.createElement("a");
 link.download="paix2026.png";
-link.href=canvas.toDataURL("image/png");
+link.href=canvas.toDataURL("image/png",1.0);
 link.click();
 });
 }
