@@ -127,6 +127,31 @@ let sy = (uploadedImage.height - size) / 2;
 ctx.drawImage(uploadedImage,sx,sy,size,size,80,150,540,540);
 ctx.restore();
 
+/* ================= GLOW PREMIUM ================= */
+
+ctx.save();
+ctx.beginPath();
+ctx.arc(centerX, centerY, 330, 0, Math.PI * 2);
+ctx.shadowColor = "rgba(31,140,58,0.45)";
+ctx.shadowBlur = 60;
+ctx.strokeStyle = "rgba(31,140,58,0.6)";
+ctx.lineWidth = 6;
+ctx.stroke();
+ctx.restore();
+
+/* ================= BADGE ================= */
+
+ctx.save();
+ctx.beginPath();
+ctx.roundRect(80, 90, 340, 70, 40);
+ctx.fillStyle = "rgba(255,255,255,0.9)";
+ctx.fill();
+ctx.restore();
+
+ctx.fillStyle = "#1f8c3a";
+ctx.font = "600 26px Poppins";
+ctx.fillText("Ambassadeur Paix 2026", 105, 135);
+
 /* ================= TEXTE DROITE ================= */
 
 ctx.textAlign = "left";
@@ -176,7 +201,7 @@ x += w2;
 ctx.fillStyle = "#d91e18";
 ctx.fillText(p3, x, y);
 
-/* ================= POUR LA PAIX (UNE SEULE LIGNE) ================= */
+/* ================= POUR LA PAIX ================= */
 
 y += 65;
 ctx.font = "400 40px Poppins";
@@ -197,8 +222,13 @@ ctx.fillStyle = "#333";
 ctx.fillText(t1, x, y);
 x += tw1;
 
+/* Dégradé PAIX */
+const gradient = ctx.createLinearGradient(x, y, x + tw2, y);
+gradient.addColorStop(0, "#1f8c3a");
+gradient.addColorStop(1, "#34c759");
+
 ctx.font = "900 58px Poppins";
-ctx.fillStyle = "#1f8c3a";
+ctx.fillStyle = gradient;
 ctx.fillText(t2, x, y);
 
 /* ================= PHRASE ================= */
@@ -219,11 +249,18 @@ y += 60;
 ctx.font = "700 34px Poppins";
 ctx.fillStyle = "#1f8c3a";
 ctx.fillText("#PaixAuBénin2026", 540, y);
-  
+
+/* ================= SIGNATURE ================= */
+
+ctx.font = "500 18px Poppins";
+ctx.fillStyle = "rgba(0,0,0,0.4)";
+ctx.textAlign = "right";
+ctx.fillText("© Paix2026 - Officiel", 1040, 1040);
+
 /* ===== LOGO ===== */
 
 const logo = new Image();
-logo.src = "logo.png"; // doit être dans le même dossier que ton HTML
+logo.src = "logo.png";
 
 logo.onload = function(){
 
@@ -240,25 +277,21 @@ logo.onload = function(){
   const logoX = 1080 - logoWidth - 60;
   const logoY = 60;
 
-  /* Cercle blanc propre derrière */
   ctx.beginPath();
   ctx.arc(logoX + logoWidth/2, logoY + logoHeight/2, 90, 0, Math.PI*2);
   ctx.fillStyle = "white";
   ctx.fill();
 
-  /* Logo sans déformation */
   ctx.drawImage(logo, logoX, logoY, logoWidth, logoHeight);
 
   downloadCanvas();
 };
 
-/* Fallback si le logo ne charge pas */
 logo.onerror = function(){
   console.log("Logo non chargé");
   downloadCanvas();
 };
 
-/* Fonction téléchargement */
 function downloadCanvas(){
   const link = document.createElement("a");
   link.download = "paix2026.png";
