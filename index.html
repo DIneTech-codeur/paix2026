@@ -60,6 +60,9 @@ return;
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
+/* RESET */
+ctx.clearRect(0,0,1080,1080);
+
 /* ===== FOND DEGRADE ===== */
 let gradient = ctx.createLinearGradient(0,0,1080,1080);
 gradient.addColorStop(0,"#0b7a3d");
@@ -69,9 +72,9 @@ ctx.fillStyle = gradient;
 ctx.fillRect(0,0,1080,1080);
 
 /* ===== VAGUE CLAIRE ===== */
-ctx.fillStyle = "rgba(255,255,255,0.85)";
+ctx.fillStyle = "rgba(255,255,255,0.9)";
 ctx.beginPath();
-ctx.ellipse(540,650,800,300,0,0,Math.PI*2);
+ctx.ellipse(540,720,900,350,0,0,Math.PI*2);
 ctx.fill();
 
 /* ===== CERCLE EXTERIEUR ===== */
@@ -80,47 +83,73 @@ ctx.arc(350,450,320,0,Math.PI*2);
 ctx.fillStyle = "#c4a000";
 ctx.fill();
 
-/* ===== CERCLE INTERIEUR BLANC ===== */
+/* ===== CERCLE INTERIEUR ===== */
 ctx.beginPath();
 ctx.arc(350,450,300,0,Math.PI*2);
 ctx.fillStyle = "white";
 ctx.fill();
 
-/* ===== PHOTO ===== */
+/* ===== PHOTO (cover auto) ===== */
 ctx.save();
 ctx.beginPath();
 ctx.arc(350,450,280,0,Math.PI*2);
 ctx.clip();
-ctx.drawImage(uploadedImage,70,170,560,560);
+
+let size = Math.min(uploadedImage.width, uploadedImage.height);
+let sx = (uploadedImage.width - size) / 2;
+let sy = (uploadedImage.height - size) / 2;
+
+ctx.drawImage(uploadedImage, sx, sy, size, size, 70,170,560,560);
 ctx.restore();
 
-/* ===== TEXTE ===== */
+/* ===== TEXTE ALIGNÉ PRO ===== */
+ctx.textAlign = "left";
+
+let textX = 620;
+let y = 380;
+
+/* Ligne 1 */
 ctx.fillStyle = "#111";
-ctx.font = "600 48px Poppins";
-ctx.fillText("Je m’engage avec la",600,380);
+ctx.font = "600 46px Poppins";
+ctx.fillText("Je m’engage avec la", textX, y);
+
+y += 70;
+
+/* Titre principal */
+ctx.fillStyle = "#0b7a3d";
+ctx.font = "900 64px Poppins";
+ctx.fillText("MAIRIE DES JEUNES", textX, y);
+
+y += 75;
+
+ctx.fillText("DE DJOUGOU", textX, y);
+
+y += 85;
+
+/* Phrase paix */
+ctx.fillStyle = "#111";
+ctx.font = "400 42px Poppins";
+ctx.fillText("pour la", textX, y);
 
 ctx.fillStyle = "#0b7a3d";
-ctx.font = "900 60px Poppins";
-ctx.fillText("MAIRIE DES JEUNES",600,450);
-ctx.fillText("DE DJOUGOU",600,520);
+ctx.font = "900 48px Poppins";
+ctx.fillText("PAIX", textX + 170, y);
+
+y += 70;
 
 ctx.fillStyle = "#111";
 ctx.font = "400 40px Poppins";
-ctx.fillText("pour la ",600,600);
+ctx.fillText("avant, pendant et après", textX, y);
 
-ctx.fillStyle = "#0b7a3d";
-ctx.font = "900 42px Poppins";
-ctx.fillText("PAIX",720,600);
+y += 60;
 
-ctx.fillStyle = "#111";
-ctx.font = "400 40px Poppins";
-ctx.fillText("avant, pendant",600,650);
-ctx.fillText("et après les élections au Bénin.",600,700);
+ctx.fillText("les élections au Bénin.", textX, y);
 
 /* ===== HASHTAG ===== */
 ctx.fillStyle = "#0b7a3d";
-ctx.font = "700 42px Poppins";
-ctx.fillText("#PaixAuBénin2026",550,980);
+ctx.font = "700 44px Poppins";
+ctx.textAlign = "center";
+ctx.fillText("#PaixAuBénin2026", 540, 1000);
 
 /* ===== LOGO ===== */
 const logo = new Image();
@@ -132,7 +161,7 @@ ctx.fillStyle = "white";
 ctx.fill();
 ctx.drawImage(logo,840,80,160,160);
 
-/* ===== DOWNLOAD ===== */
+/* DOWNLOAD */
 const link = document.createElement("a");
 link.download = "paix2026.png";
 link.href = canvas.toDataURL("image/png");
