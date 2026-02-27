@@ -139,18 +139,37 @@ ctx.lineWidth = 6;
 ctx.stroke();
 ctx.restore();
 
-/* ================= BADGE ================= */
+/* ================= BADGE AMBASSADEUR STABLE ================= */
 
-ctx.save();
+const badgeText = "Ambassadeur Paix 2026";
+
+ctx.font = "600 34px Poppins";
+
+/* Mesure automatique du texte */
+const textWidth = ctx.measureText(badgeText).width;
+
+/* Padding du badge */
+const paddingX = 30;
+const paddingY = 18;
+
+const badgeWidth = textWidth + paddingX * 2;
+const badgeHeight = 60;
+
+/* Position relative au cercle */
+const badgeX = centerX - radius + 40;
+const badgeY = centerY - radius - 30;
+
+/* Fond arrondi */
+ctx.fillStyle = "#e7efe9";
 ctx.beginPath();
-ctx.roundRect(80, 90, 340, 70, 40);
-ctx.fillStyle = "rgba(255,255,255,0.9)";
+ctx.roundRect(badgeX, badgeY, badgeWidth, badgeHeight, 40);
 ctx.fill();
-ctx.restore();
 
+/* Texte */
 ctx.fillStyle = "#1f8c3a";
-ctx.font = "600 26px Poppins";
-ctx.fillText("Ambassadeur Paix 2026", 105, 135);
+ctx.textAlign = "left";
+ctx.textBaseline = "middle";
+ctx.fillText(badgeText, badgeX + paddingX, badgeY + badgeHeight / 2);
 
 /* ================= TEXTE DROITE OPTIMISÉ ================= */
 
