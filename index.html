@@ -60,103 +60,148 @@ return;
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
-/* RESET */
 ctx.clearRect(0,0,1080,1080);
 
-/* ===== FOND DEGRADE ===== */
-let gradient = ctx.createLinearGradient(0,0,1080,1080);
-gradient.addColorStop(0,"#0b7a3d");
-gradient.addColorStop(0.5,"#f4c400");
-gradient.addColorStop(1,"#e30613");
-ctx.fillStyle = gradient;
+/* ================= FOND PREMIUM ================= */
+
+let bgGradient = ctx.createLinearGradient(0,0,1080,1080);
+bgGradient.addColorStop(0,"#1c8c3a");
+bgGradient.addColorStop(0.5,"#f2c300");
+bgGradient.addColorStop(1,"#d91e18");
+ctx.fillStyle = bgGradient;
 ctx.fillRect(0,0,1080,1080);
 
-/* ===== VAGUE CLAIRE ===== */
-ctx.fillStyle = "rgba(255,255,255,0.9)";
+/* Lumière radiale derrière photo */
+let glow = ctx.createRadialGradient(350,450,100,350,450,600);
+glow.addColorStop(0,"rgba(255,255,255,0.35)");
+glow.addColorStop(1,"rgba(255,255,255,0)");
+ctx.fillStyle = glow;
+ctx.fillRect(0,0,1080,1080);
+
+/* ================= VAGUE BASSE ================= */
+
+ctx.fillStyle = "#f5efe6";
 ctx.beginPath();
-ctx.ellipse(540,720,900,350,0,0,Math.PI*2);
+ctx.moveTo(0,760);
+ctx.quadraticCurveTo(540,680,1080,760);
+ctx.lineTo(1080,1080);
+ctx.lineTo(0,1080);
+ctx.closePath();
 ctx.fill();
 
-/* ===== CERCLE EXTERIEUR ===== */
-ctx.beginPath();
-ctx.arc(350,450,320,0,Math.PI*2);
-ctx.fillStyle = "#c4a000";
-ctx.fill();
+/* ================= HALO TRICOLORE ================= */
 
-/* ===== CERCLE INTERIEUR ===== */
+const centerX = 350;
+const centerY = 450;
+const outerRadius = 330;
+const innerRadius = 300;
+
+/* Vert */
 ctx.beginPath();
-ctx.arc(350,450,300,0,Math.PI*2);
+ctx.strokeStyle = "#1c8c3a";
+ctx.lineWidth = 40;
+ctx.arc(centerX,centerY,315,-Math.PI/2,Math.PI/6);
+ctx.stroke();
+
+/* Jaune */
+ctx.beginPath();
+ctx.strokeStyle = "#f2c300";
+ctx.arc(centerX,centerY,315,Math.PI/6,5*Math.PI/6);
+ctx.stroke();
+
+/* Rouge */
+ctx.beginPath();
+ctx.strokeStyle = "#d91e18";
+ctx.arc(centerX,centerY,315,5*Math.PI/6,3*Math.PI/2);
+ctx.stroke();
+
+/* Cercle blanc */
+ctx.beginPath();
 ctx.fillStyle = "white";
+ctx.arc(centerX,centerY,innerRadius,0,Math.PI*2);
 ctx.fill();
 
-/* ===== PHOTO (cover auto) ===== */
+/* ================= PHOTO ================= */
+
 ctx.save();
 ctx.beginPath();
-ctx.arc(350,450,280,0,Math.PI*2);
+ctx.arc(centerX,centerY,280,0,Math.PI*2);
 ctx.clip();
 
 let size = Math.min(uploadedImage.width, uploadedImage.height);
 let sx = (uploadedImage.width - size) / 2;
 let sy = (uploadedImage.height - size) / 2;
 
-ctx.drawImage(uploadedImage, sx, sy, size, size, 70,170,560,560);
+ctx.drawImage(uploadedImage,sx,sy,size,size,70,170,560,560);
 ctx.restore();
 
-/* ===== TEXTE VERSION PRO BAS ===== */
+/* ================= TEXTE DROITE ================= */
 
-ctx.textAlign = "center";
+ctx.textAlign = "left";
+let textStartX = 650;
+let y = 380;
 
-let centerX = 540;
-let y = 720;
+/* Ligne intro */
+ctx.fillStyle = "#222";
+ctx.font = "500 40px Poppins";
+ctx.fillText("Je m’engage avec la", textStartX, y);
 
-/* Ligne 1 */
-ctx.fillStyle = "#111";
-ctx.font = "500 38px Poppins";
-ctx.fillText("Je m’engage avec la", centerX, y);
+y += 70;
 
-y += 55;
-
-/* Titre */
-ctx.fillStyle = "#0b7a3d";
-ctx.font = "800 48px Poppins";
-ctx.fillText("MAIRIE DES JEUNES DE DJOUGOU", centerX, y);
+/* MAIRIE */
+ctx.font = "900 60px Poppins";
+ctx.fillStyle = "#1c8c3a";
+ctx.fillText("MAIRIE", textStartX, y);
 
 y += 65;
 
-/* Phrase paix */
-ctx.fillStyle = "#111";
+ctx.fillStyle = "#f2c300";
+ctx.fillText("DES JEUNES", textStartX, y);
+
+y += 65;
+
+ctx.fillStyle = "#d91e18";
+ctx.fillText("DE DJOUGOU", textStartX, y);
+
+/* ================= BAS ================= */
+
+ctx.textAlign = "center";
+y = 820;
+
+ctx.fillStyle = "#222";
+ctx.font = "400 42px Poppins";
+ctx.fillText("pour la", 540, y);
+
+y += 65;
+
+ctx.fillStyle = "#1c8c3a";
+ctx.font = "900 70px Poppins";
+ctx.fillText("PAIX", 540, y);
+
+y += 70;
+
+ctx.fillStyle = "#333";
 ctx.font = "400 36px Poppins";
-ctx.fillText("pour la", centerX - 60, y);
+ctx.fillText("avant, pendant et après les élections au Bénin.", 540, y);
 
-ctx.fillStyle = "#0b7a3d";
-ctx.font = "900 40px Poppins";
-ctx.fillText("PAIX", centerX + 60, y);
+y += 90;
 
-y += 55;
+ctx.fillStyle = "#1c8c3a";
+ctx.font = "700 44px Poppins";
+ctx.fillText("#PaixAuBénin2026", 540, y);
 
-ctx.fillStyle = "#111";
-ctx.font = "400 34px Poppins";
-ctx.fillText("avant, pendant et après les", centerX, y);
+/* ================= LOGO ================= */
 
-y += 50;
-
-ctx.fillText("élections au Bénin.", centerX, y);
-
-/* ===== HASHTAG ===== */
-y += 80;
-ctx.fillStyle = "#0b7a3d";
-ctx.font = "700 38px Poppins";
-ctx.fillText("#PaixAuBénin2026", centerX, y);
-
-/* ===== LOGO ===== */
 const logo = new Image();
 logo.src = "logo.png";
 logo.onload = function(){
+
 ctx.beginPath();
-ctx.arc(920,160,100,0,Math.PI*2);
 ctx.fillStyle = "white";
+ctx.arc(930,150,100,0,Math.PI*2);
 ctx.fill();
-ctx.drawImage(logo,840,80,160,160);
+
+ctx.drawImage(logo,850,70,160,160);
 
 /* DOWNLOAD */
 const link = document.createElement("a");
@@ -164,6 +209,7 @@ link.download = "paix2026.png";
 link.href = canvas.toDataURL("image/png");
 link.click();
 }
+
 }
 </script>
 
