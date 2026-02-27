@@ -102,54 +102,51 @@ let sy = (uploadedImage.height - size) / 2;
 ctx.drawImage(uploadedImage, sx, sy, size, size, 70,170,560,560);
 ctx.restore();
 
-/* ===== TEXTE ALIGNÉ PRO ===== */
-ctx.textAlign = "left";
+/* ===== TEXTE VERSION PRO BAS ===== */
 
-let textX = 620;
-let y = 380;
+ctx.textAlign = "center";
+
+let centerX = 540;
+let y = 720;
 
 /* Ligne 1 */
 ctx.fillStyle = "#111";
-ctx.font = "600 46px Poppins";
-ctx.fillText("Je m’engage avec la", textX, y);
+ctx.font = "500 38px Poppins";
+ctx.fillText("Je m’engage avec la", centerX, y);
 
-y += 70;
+y += 55;
 
-/* Titre principal */
+/* Titre */
 ctx.fillStyle = "#0b7a3d";
-ctx.font = "900 64px Poppins";
-ctx.fillText("MAIRIE DES JEUNES", textX, y);
+ctx.font = "800 48px Poppins";
+ctx.fillText("MAIRIE DES JEUNES DE DJOUGOU", centerX, y);
 
-y += 75;
-
-ctx.fillText("DE DJOUGOU", textX, y);
-
-y += 85;
+y += 65;
 
 /* Phrase paix */
 ctx.fillStyle = "#111";
-ctx.font = "400 42px Poppins";
-ctx.fillText("pour la", textX, y);
+ctx.font = "400 36px Poppins";
+ctx.fillText("pour la", centerX - 60, y);
 
 ctx.fillStyle = "#0b7a3d";
-ctx.font = "900 48px Poppins";
-ctx.fillText("PAIX", textX + 170, y);
+ctx.font = "900 40px Poppins";
+ctx.fillText("PAIX", centerX + 60, y);
 
-y += 70;
+y += 55;
 
 ctx.fillStyle = "#111";
-ctx.font = "400 40px Poppins";
-ctx.fillText("avant, pendant et après", textX, y);
+ctx.font = "400 34px Poppins";
+ctx.fillText("avant, pendant et après les", centerX, y);
 
-y += 60;
+y += 50;
 
-ctx.fillText("les élections au Bénin.", textX, y);
+ctx.fillText("élections au Bénin.", centerX, y);
 
 /* ===== HASHTAG ===== */
+y += 80;
 ctx.fillStyle = "#0b7a3d";
-ctx.font = "700 44px Poppins";
-ctx.textAlign = "center";
-ctx.fillText("#PaixAuBénin2026", 540, 1000);
+ctx.font = "700 38px Poppins";
+ctx.fillText("#PaixAuBénin2026", centerX, y);
 
 /* ===== LOGO ===== */
 const logo = new Image();
