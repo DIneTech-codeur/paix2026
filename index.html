@@ -220,18 +220,38 @@ ctx.font = "700 34px Poppins";
 ctx.fillStyle = "#1f8c3a";
 ctx.fillText("#PaixAuBénin2026", 540, y);
   
-/* ================= LOGO ================= */
+/* ================= LOGO PRO PRESTIGE ================= */
 
-const logo = new Image();
-logo.src = "logo.png";
-logo.onload = function(){
+const logo = await loadImage("/logo.png"); // adapte le chemin si besoin
 
-ctx.beginPath();
-ctx.fillStyle = "white";
-ctx.arc(930,150,95,0,Math.PI*2);
-ctx.fill();
+const maxWidth = 160;
+const maxHeight = 160;
 
-ctx.drawImage(logo,855,75,150,150);
+/* Calcul ratio */
+const ratio = Math.min(
+  maxWidth / logo.width,
+  maxHeight / logo.height
+);
+
+const logoWidth = logo.width * ratio;
+const logoHeight = logo.height * ratio;
+
+/* Position (coin haut droit, comme ton design actuel) */
+const logoX = 1080 - logoWidth - 60;
+const logoY = 60;
+
+/* Ombre légère premium */
+ctx.shadowColor = "rgba(0,0,0,0.15)";
+ctx.shadowBlur = 20;
+ctx.shadowOffsetY = 6;
+
+/* Draw sans déformation */
+ctx.drawImage(logo, logoX, logoY, logoWidth, logoHeight);
+
+/* Reset shadow */
+ctx.shadowColor = "transparent";
+ctx.shadowBlur = 0;
+ctx.shadowOffsetY = 0;
 
 /* DOWNLOAD */
 const link = document.createElement("a");
