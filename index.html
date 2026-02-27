@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Génération Paix 2026 | Officiel</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+font-family:'Poppins',sans-serif;
+background:linear-gradient(135deg,#041c3c,#0a2a66);
+color:white;
+overflow-x:hidden;
+}
+
+header{
+position:fixed;
+top:0;
+width:100%;
+padding:20px 40px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+background:rgba(0,0,0,0.3);
+backdrop-filter:blur(10px);
+z-index:1000;
+}
+
+.logo{
+font-family:'Montserrat';
+font-weight:800;
+letter-spacing:2px;
+}
+
+.hero{
+height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+padding:20px;
+animation:fadeIn 1.5s ease-in-out;
+}
+
+.hero h1{
+font-family:'Montserrat';
+font-size:60px;
+font-weight:800;
+margin-bottom:20px;
+}
+
+.hero p{
+max-width:700px;
+font-size:20px;
+opacity:0.9;
+margin-bottom:30px;
+}
+
+.btn{
+background:linear-gradient(90deg,#008751,#FCD116,#E8112D);
+color:white;
+padding:15px 35px;
+border:none;
+border-radius:40px;
+font-family:'Montserrat';
+font-weight:600;
+cursor:pointer;
+font-size:18px;
+transition:0.3s;
+}
+
+.btn:hover{
+transform:scale(1.05);
+}
+
+.counter-section{
+padding:100px 20px;
+text-align:center;
+background:white;
+color:#111;
+}
+
+.counter-section h2{
+font-family:'Montserrat';
+font-size:40px;
+margin-bottom:20px;
+}
+
+.counter{
+font-size:60px;
+font-family:'Montserrat';
+font-weight:800;
+color:#E8112D;
+}
+
+.footer{
+padding:40px;
+text-align:center;
+background:#041c3c;
+font-size:14px;
+opacity:0.6;
+}
+
+/* Animations */
+@keyframes fadeIn{
+from{opacity:0;transform:translateY(30px);}
+to{opacity:1;transform:translateY(0);}
+}
+
+/* Responsive */
+@media(max-width:768px){
+.hero h1{font-size:38px}
+.hero p{font-size:16px}
+.counter{font-size:40px}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="logo">GÉNÉRATION PAIX 2026</div>
+<a href="generate.html"><button class="btn">Je m'engage</button></a>
+</header>
+
+<section class="hero">
+<h1>En 2026, nous choisissons la paix.</h1>
+<p>
+Je m’engage pour une élection présidentielle pacifique, transparente et unie.
+La jeunesse béninoise montre l’exemple.
+</p>
+<a href="generate.html"><button class="btn">JE M’ENGAGE MAINTENANT</button></a>
+</section>
+
+<section class="counter-section">
+<h2>Citoyens déjà engagés 🇧🇯</h2>
+<div class="counter" id="counter">0</div>
+</section>
+
+<div class="footer">
+© 2026 Génération Paix 2026 – Tous droits réservés
+</div>
+
+<script>
+async function loadCounter(){
+  const res = await fetch('/api/counter');
+  const data = await res.json();
+  document.getElementById("counter").innerText = data.count.toLocaleString();
+}
+loadCounter();
+</script>
+
+</body>
+</html>
