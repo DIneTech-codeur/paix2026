@@ -143,49 +143,50 @@ textY += 60;
 ctx.font = "500 40px Poppins";
 ctx.fillText("avec la", textX, textY);
 
-/* ================= BLOC BAS STRUCTURÉ ================= */
+/* ================= BLOC BAS STRUCTURÉ CORRIGÉ ================= */
 
 ctx.textAlign = "center";
 
-let y = 820;
+let y = 760;
+
+/* MAIRIE DES JEUNES (même ligne) */
+ctx.font = "900 52px Poppins";
 
 /* MAIRIE */
-ctx.font = "900 58px Poppins";
 ctx.fillStyle = "#1f8c3a";
-ctx.fillText("MAIRIE", 540, y);
+ctx.fillText("MAIRIE", 380, y);
 
-y += 65;
-
+/* DES JEUNES */
 ctx.fillStyle = "#f2c300";
-ctx.fillText("DES JEUNES", 540, y);
+ctx.fillText("DES JEUNES", 650, y);
 
+/* DE DJOUGOU */
 y += 65;
-
 ctx.fillStyle = "#d91e18";
 ctx.fillText("DE DJOUGOU", 540, y);
 
 /* pour la */
-y += 80;
+y += 70;
 ctx.fillStyle = "#333";
-ctx.font = "400 40px Poppins";
+ctx.font = "400 38px Poppins";
 ctx.fillText("pour la", 540, y);
 
 /* PAIX */
-y += 70;
+y += 60;
 ctx.fillStyle = "#1f8c3a";
-ctx.font = "900 72px Poppins";
+ctx.font = "900 64px Poppins";
 ctx.fillText("PAIX", 540, y);
 
 /* phrase */
-y += 70;
+y += 60;
 ctx.fillStyle = "#444";
-ctx.font = "400 34px Poppins";
+ctx.font = "400 30px Poppins";
 ctx.fillText("avant, pendant et après les élections au Bénin.", 540, y);
 
 /* hashtag */
-y += 80;
+y += 70;
 ctx.fillStyle = "#1f8c3a";
-ctx.font = "700 42px Poppins";
+ctx.font = "700 36px Poppins";
 ctx.fillText("#PaixAuBénin2026", 540, y);
 
 /* ================= LOGO ================= */
