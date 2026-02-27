@@ -86,6 +86,7 @@ ctx.fill();
 
 const centerX = 350;
 const centerY = 420;
+const radius = 290;
 
 /* Halo fin tricolore */
 ctx.lineWidth = 18;
@@ -111,7 +112,7 @@ ctx.stroke();
 /* Cercle blanc */
 ctx.beginPath();
 ctx.fillStyle = "white";
-ctx.arc(centerX,centerY,290,0,Math.PI*2);
+ctx.arc(centerX,centerY,radius,0,Math.PI*2);
 ctx.fill();
 
 /* Photo clip */
@@ -139,27 +140,40 @@ ctx.lineWidth = 6;
 ctx.stroke();
 ctx.restore();
 
-/* ================= BADGE ================= */
+/* ================= BADGE STABLE (RÉPARÉ) ================= */
+
+const badgeText = "Ambassadeur Paix 2026";
+
+ctx.font = "600 26px Poppins";
+
+const textWidth = ctx.measureText(badgeText).width;
+const paddingX = 25;
+const paddingY = 15;
+
+const badgeWidth = textWidth + paddingX * 2;
+const badgeHeight = 55;
+
+/* Position RELATIVE au cercle (ne bougera jamais) */
+const badgeX = centerX - radius + 10;
+const badgeY = centerY - radius - 55;
 
 ctx.save();
 ctx.beginPath();
-ctx.roundRect(80, 90, 340, 70, 40);
-ctx.fillStyle = "rgba(255,255,255,0.9)";
+ctx.roundRect(badgeX, badgeY, badgeWidth, badgeHeight, 40);
+ctx.fillStyle = "rgba(255,255,255,0.92)";
 ctx.fill();
 ctx.restore();
 
 ctx.fillStyle = "#1f8c3a";
-ctx.font = "600 26px Poppins";
-ctx.fillText("Ambassadeur Paix 2026", 105, 135);
+ctx.textAlign = "left";
+ctx.textBaseline = "middle";
+ctx.fillText(badgeText, badgeX + paddingX, badgeY + badgeHeight/2);
 
 /* ================= TEXTE DROITE OPTIMISÉ ================= */
 
 ctx.textAlign = "left";
 
-/* Plus de respiration */
 let textX = 720;
-
-/* Centré verticalement par rapport au cercle */
 let textY = 390;
 
 ctx.fillStyle = "#222";
@@ -177,7 +191,7 @@ ctx.textAlign = "left";
 
 let y = 835;
 
-/* ================= MAIRIE DES JEUNES DE DJOUGOU ================= */
+/* MAIRIE DES JEUNES DE DJOUGOU */
 
 ctx.font = "900 44px Poppins";
 
@@ -204,7 +218,7 @@ x += w2;
 ctx.fillStyle = "#d91e18";
 ctx.fillText(p3, x, y);
 
-/* ================= POUR LA PAIX ================= */
+/* POUR LA PAIX */
 
 y += 65;
 ctx.font = "400 40px Poppins";
@@ -225,7 +239,6 @@ ctx.fillStyle = "#333";
 ctx.fillText(t1, x, y);
 x += tw1;
 
-/* Dégradé PAIX */
 const gradient = ctx.createLinearGradient(x, y, x + tw2, y);
 gradient.addColorStop(0, "#1f8c3a");
 gradient.addColorStop(1, "#34c759");
@@ -234,7 +247,7 @@ ctx.font = "900 58px Poppins";
 ctx.fillStyle = gradient;
 ctx.fillText(t2, x, y);
 
-/* ================= PHRASE ================= */
+/* PHRASE */
 
 y += 65;
 ctx.textAlign = "center";
@@ -246,14 +259,14 @@ ctx.fillText(
   y
 );
 
-/* ================= HASHTAG ================= */
+/* HASHTAG */
 
 y += 60;
 ctx.font = "700 34px Poppins";
 ctx.fillStyle = "#1f8c3a";
 ctx.fillText("#PaixAuBénin2026", 540, y);
 
-/* ================= SIGNATURE ================= */
+/* SIGNATURE */
 
 ctx.font = "500 18px Poppins";
 ctx.fillStyle = "rgba(0,0,0,0.4)";
@@ -304,6 +317,5 @@ function downloadCanvas(){
 
 }
 </script>
-
 </body>
 </html>
