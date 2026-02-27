@@ -51,121 +51,163 @@ img.src = event.target.result;
 reader.readAsDataURL(e.target.files[0]);
 });
 
-async function generate() {
-  const canvas = document.getElementById("canvas");
-  const ctx = canvas.getContext("2d");
+function generateImage(){
+if(!uploadedImage){
+alert("Upload une photo d'abord");
+return;
+}
 
-  const width = 1080;
-  const height = 1080;
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
 
-  canvas.width = width;
-  canvas.height = height;
+ctx.clearRect(0,0,1080,1080);
 
-  /* ================= FOND ================= */
+/* ================= FOND ================= */
 
-  ctx.fillStyle = "#ffffff";
-  ctx.fillRect(0, 0, width, height);
+let bgGradient = ctx.createLinearGradient(0,0,1080,1080);
+bgGradient.addColorStop(0,"#1f8c3a");
+bgGradient.addColorStop(0.5,"#f2c300");
+bgGradient.addColorStop(1,"#d91e18");
+ctx.fillStyle = bgGradient;
+ctx.fillRect(0,0,1080,1080);
 
-  /* ================= IMAGE ================= */
+/* ================= VAGUE BASSE ================= */
 
-  const fileInput = document.getElementById("imageInput");
-  const file = fileInput.files[0];
+ctx.fillStyle = "#f4efe6";
+ctx.beginPath();
+ctx.moveTo(0,760);
+ctx.quadraticCurveTo(540,700,1080,760);
+ctx.lineTo(1080,1080);
+ctx.lineTo(0,1080);
+ctx.closePath();
+ctx.fill();
 
-  if (!file) {
-    alert("Ajoute une image d'abord.");
-    return;
-  }
+/* ================= PHOTO ================= */
 
-  const img = new Image();
-  img.src = URL.createObjectURL(file);
+const centerX = 350;
+const centerY = 420;
 
-  await new Promise((resolve) => {
-    img.onload = resolve;
-  });
+/* Halo fin tricolore */
+ctx.lineWidth = 18;
 
-  const imgSize = 720;
-  const imgX = (width - imgSize) / 2;
-  const imgY = 80;
+/* Vert */
+ctx.beginPath();
+ctx.strokeStyle = "#1f8c3a";
+ctx.arc(centerX,centerY,310,-Math.PI/2,Math.PI/6);
+ctx.stroke();
 
-  ctx.save();
-  ctx.beginPath();
-  ctx.arc(width / 2, imgY + imgSize / 2, imgSize / 2, 0, Math.PI * 2);
-  ctx.closePath();
-  ctx.clip();
+/* Jaune */
+ctx.beginPath();
+ctx.strokeStyle = "#f2c300";
+ctx.arc(centerX,centerY,310,Math.PI/6,5*Math.PI/6);
+ctx.stroke();
 
-  ctx.drawImage(img, imgX, imgY, imgSize, imgSize);
-  ctx.restore();
+/* Rouge */
+ctx.beginPath();
+ctx.strokeStyle = "#d91e18";
+ctx.arc(centerX,centerY,310,5*Math.PI/6,3*Math.PI/2);
+ctx.stroke();
 
-  /* ================= BLOC TEXTE ================= */
+/* Cercle blanc */
+ctx.beginPath();
+ctx.fillStyle = "white";
+ctx.arc(centerX,centerY,290,0,Math.PI*2);
+ctx.fill();
 
-  ctx.textAlign = "center";
+/* Photo clip */
+ctx.save();
+ctx.beginPath();
+ctx.arc(centerX,centerY,270,0,Math.PI*2);
+ctx.clip();
 
-  let y = 860;
+let size = Math.min(uploadedImage.width, uploadedImage.height);
+let sx = (uploadedImage.width - size) / 2;
+let sy = (uploadedImage.height - size) / 2;
 
-  /* MAIRIE DES JEUNES DE DJOUGOU (une ligne centrée) */
+ctx.drawImage(uploadedImage,sx,sy,size,size,80,150,540,540);
+ctx.restore();
 
-  ctx.font = "900 48px Poppins";
+/* ================= TEXTE DROITE ================= */
 
-  const t1 = "MAIRIE ";
-  const t2 = "DES JEUNES ";
-  const t3 = "DE DJOUGOU";
+ctx.textAlign = "left";
 
-  const w1 = ctx.measureText(t1).width;
-  const w2 = ctx.measureText(t2).width;
-  const w3 = ctx.measureText(t3).width;
+let textX = 670;
+let textY = 400;
 
-  const totalWidth = w1 + w2 + w3;
-  let startX = (width - totalWidth) / 2;
+ctx.fillStyle = "#222";
+ctx.font = "700 48px Poppins";
+ctx.fillText("Je m’engage", textX, textY);
 
-  ctx.fillStyle = "#1f8c3a";
-  ctx.fillText(t1, startX, y);
+textY += 60;
 
-  ctx.fillStyle = "#f2c300";
-  ctx.fillText(t2, startX + w1, y);
+ctx.font = "500 40px Poppins";
+ctx.fillText("avec la", textX, textY);
 
-  ctx.fillStyle = "#d91e18";
-  ctx.fillText(t3, startX + w1 + w2, y);
+/* ================= BLOC BAS STRUCTURÉ ================= */
 
-  /* POUR LA */
+ctx.textAlign = "center";
 
-  y += 60;
-  ctx.fillStyle = "#333";
-  ctx.font = "400 36px Poppins";
-  ctx.fillText("pour la", width / 2, y);
+let y = 820;
 
-  /* PAIX */
+/* MAIRIE */
+ctx.font = "900 58px Poppins";
+ctx.fillStyle = "#1f8c3a";
+ctx.fillText("MAIRIE", 540, y);
 
-  y += 55;
-  ctx.fillStyle = "#1f8c3a";
-  ctx.font = "900 64px Poppins";
-  ctx.fillText("PAIX", width / 2, y);
+y += 65;
 
-  /* PHRASE */
+ctx.fillStyle = "#f2c300";
+ctx.fillText("DES JEUNES", 540, y);
 
-  y += 55;
-  ctx.fillStyle = "#444";
-  ctx.font = "400 30px Poppins";
-  ctx.fillText(
-    "avant, pendant et après les élections au Bénin.",
-    width / 2,
-    y
-  );
+y += 65;
 
-  /* HASHTAG */
+ctx.fillStyle = "#d91e18";
+ctx.fillText("DE DJOUGOU", 540, y);
 
-  y += 60;
-  ctx.fillStyle = "#1f8c3a";
-  ctx.font = "700 34px Poppins";
-  ctx.fillText("#PaixAuBénin2026", width / 2, y);
+/* pour la */
+y += 80;
+ctx.fillStyle = "#333";
+ctx.font = "400 40px Poppins";
+ctx.fillText("pour la", 540, y);
 
-  /* ================= TÉLÉCHARGEMENT ================= */
+/* PAIX */
+y += 70;
+ctx.fillStyle = "#1f8c3a";
+ctx.font = "900 72px Poppins";
+ctx.fillText("PAIX", 540, y);
 
-  canvas.toBlob(function (blob) {
-    const link = document.createElement("a");
-    link.download = "paix2026.png";
-    link.href = URL.createObjectURL(blob);
-    link.click();
-  }, "image/png");
+/* phrase */
+y += 70;
+ctx.fillStyle = "#444";
+ctx.font = "400 34px Poppins";
+ctx.fillText("avant, pendant et après les élections au Bénin.", 540, y);
+
+/* hashtag */
+y += 80;
+ctx.fillStyle = "#1f8c3a";
+ctx.font = "700 42px Poppins";
+ctx.fillText("#PaixAuBénin2026", 540, y);
+
+/* ================= LOGO ================= */
+
+const logo = new Image();
+logo.src = "logo.png";
+logo.onload = function(){
+
+ctx.beginPath();
+ctx.fillStyle = "white";
+ctx.arc(930,150,95,0,Math.PI*2);
+ctx.fill();
+
+ctx.drawImage(logo,855,75,150,150);
+
+/* DOWNLOAD */
+const link = document.createElement("a");
+link.download = "paix2026.png";
+link.href = canvas.toDataURL("image/png");
+link.click();
+}
+
 }
 </script>
 
