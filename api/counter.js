@@ -1,5 +1,5 @@
 
-let globalCount = 23847; // valeur initiale
+let globalCount = 1112; // valeur initiale
 
 export default function handler(req, res) {
 
